@@ -7,7 +7,7 @@ const socketio = require('socket.io') ;
 
 // app.use(cors()) ;
 
-const port = 4000 ;
+const port = 4001 ;
 //server activated on port 4000 
 const server = app.listen(port, ()=>{
     console.log(`Server started at port ${port}`);

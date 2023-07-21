@@ -12,7 +12,7 @@ const CreateGame = () => {
 
 function submitHandler(event){
   event.preventDefault();
-  socket.emit('create-game',userName);
+  socket.emit('create-game', userName);
   //now we need to go back to the server side to listen this event
 }
   return (
