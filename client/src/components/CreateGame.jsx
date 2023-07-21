@@ -5,7 +5,6 @@ import {useState} from 'react'
 const CreateGame = () => {
   const [userName,setUserName] = useState("");
 
-
   function changeHandler(event){
     setUserName(event.target.value);
   }

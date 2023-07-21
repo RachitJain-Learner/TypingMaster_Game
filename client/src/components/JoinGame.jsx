@@ -3,12 +3,11 @@ import socket from '../socket'
 import {useState} from 'react'
 
 const JoinGame = () => {
-  const [userInput,setUserInput] = useState({gameID:"",userName:""});
-
+  const [userInput,setUserInput] = useState({gameID:"", userName:""});
 
   function changeHandler(event){
     setUserInput({
-      ...userInput,[event.target.name]:event.target.value 
+      ...userInput,[event.target.name]: event.target.value 
     });
   }
 
@@ -26,7 +25,7 @@ function submitHandler(event){
           <h1>Join Game</h1>
           <form onSubmit={submitHandler}>
             <div className='group-data'>
-              <label htmlFor='gameID'>Enter GameID</label>
+              <label htmlFor='gameID'>Enter Game ID</label>
               <input type='text' name="gameID"
                 value={userInput.gameID}
                 onChange={changeHandler}
@@ -34,7 +33,7 @@ function submitHandler(event){
                 className='w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300'
               />
 
-<label htmlFor='userName'>Enter UserName</label>
+<label htmlFor='userName'>Enter User Name</label>
               <input type='text' name="userName"
                 value={userInput.userName}
                 onChange={changeHandler}

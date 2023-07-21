@@ -50,7 +50,27 @@ mongoose.connect('mongodb://127.0.0.1:27017/userDatabase' , { //imp
 .catch((error) => {console.log("Received an error")});
 
 io.on('connect', (socket)=>{
-    socket.on('create-game', async(name)=>{
+    socket.on('join-game', async(userName)=>{
+        try{
+            let game = await Game.findById(_id);
+            if(game.isStart){
+                const gameID = game._id.toString();
+                socket.join(gameID);
+                let player = {
+                    socketID : socket.id,
+                    userName
+                }
+                game.players.push(player) ;
+                game = await game.save();
+                io.to(gameID).emit('updateGame', game);
+            }
+        }   
+        catch(err){
+            console.log(err);
+        }
+    });
+
+    socket.on('create-game', async(userName)=>{
         try{
             const fetchData = await textAPI();
             let game = new Game();
@@ -58,7 +78,7 @@ io.on('connect', (socket)=>{
             let player = {
                 socketID : socket.id,
                 isStartingPlayer : true,
-                name
+                userName
             }
             game.players.push(player) ;
             game = await game.save();
