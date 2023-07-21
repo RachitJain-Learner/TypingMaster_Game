@@ -26,11 +26,11 @@ const PlayerSchema = new mongoose.Schema({
 
 const GameSchema = new mongoose.Schema({
     words : [{type: String}],
-    isJoinGame : {
+    isStart : {
         type : Boolean,
         default : true 
     },
-    isGameComplete : {
+    isComplete : {
         type : Boolean,
         default : false
     },
