@@ -21,7 +21,7 @@ const io = socketio(server, {
 
 const Game = require('./models/Player');
 const textAPI = require('./utility/api');
-const { default: CountdownTimer } = require('./client/src/components/CountdownTimer');
+// const { default: CountdownTimer } = require('./client/src/components/CountdownTimer');
 
 //adding middleware
 app.use(express.json());
@@ -50,10 +50,29 @@ mongoose.connect('mongodb://127.0.0.1:27017/userDatabase' , { //imp
 .catch((error) => {console.log("Received an error")});
 
 io.on('connect', (socket)=>{
+    socket.on('create-game', async(name)=>{
+        try{
+            const fetchData = await textAPI();
+            let game = new Game();
+            game.words = fetchData ;
+            let player = {
+                socketID : socket.id,
+                isStartingPlayer : true,
+                name
+            }
+            game.players.push(player) ;
+            game = await game.save();
 
-    socket.on('create-game', async(userName)=>{
+            const gameID = game._id.toString();
+            socket.join(gameID);
+            io.to(gameID).emit('updateGame', game);
 
-    }
+        }   
+        catch(err){
+            console.log(err);
+        }
+
+    });
 
     socket.on('timer', async({gameID, playerID})=>{
         let countDown = 5 ;

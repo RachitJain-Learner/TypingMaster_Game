@@ -10,29 +10,28 @@ import JoinGame from '../src/components/JoinGame';
 
 function App(){
   
-  const [gameState,setGameState] = useState({_id:"",isOpen:false,players:[],words:[]});
+  const [gameState,setGameState] = useState({_id:"", isStart: false, gamers: [], words: [] });
   const navigate = useNavigate();
+  
   useEffect(() =>{
     // socket.on('test', (message) =>{
     //   console.log(message);
-    // });
-
-    socket.on('updatGame',(game) =>{
+    socket.on('updateGame', (game) =>{
       console.log(game);
       setGameState(game);
-    })
+    });
+    return ()=>{
+        socket.removeAllListeners();
+      }
 
-    // return ()=>{
-    //   socket.removeAllListeners();
-    // }
-    return () => {
-      socket.off('test');
-    };
+    // return () => {
+    //   socket.off('test');
+    // };
   }, []);
 
   useEffect(()=>{
     if(gameState._id !== ""){
-       navigate(`/game/${gameState._id}`);
+      navigate(`/game/${gameState._id}`);   //error 
     }
   },[gameState._id]);
 
