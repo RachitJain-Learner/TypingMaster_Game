@@ -51,6 +51,10 @@ mongoose.connect('mongodb://127.0.0.1:27017/userDatabase' , { //imp
 
 io.on('connect', (socket)=>{
 
+    socket.on('create-game', async(userName)=>{
+
+    }
+
     socket.on('timer', async({gameID, playerID})=>{
         let countDown = 5 ;
         let game = await Game.findById(gameID);
