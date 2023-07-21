@@ -14,7 +14,7 @@ const PlayerSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    Speed:{
+    speed:{
         type: Number,
         default: -1,
     },

@@ -80,20 +80,36 @@ io.on('connect', (socket)=>{
 });
 
 
-startGameClock = (gameID) => {
+const startGameClock = async(gameID) => {
     let game = await Game.findById(gameID);
     game.startTime = new Date().getTime() ;
     game = await game.save();
     let time = 120 ;
+    
     let timerID = setInterval(function gameIntervalFunc(){
         const formatTime = calculateTime(time);
         if(time >= 0){
             io.to(gameID).emit('timer', {
                 countDown : formatTime,
-                message : "Time Remaining",
-                time-- ;
-            }
-            )
+                message : "Time Remaining"
+            });
+            time-- ;
+        }
+        else{
+            (async () => {
+                let endTime = new Date().getTime() ;
+                let game = await Game.findById(gameID);
+                let {startTime} = game ;
+                game.isComplete = true ;
+                game.gamers.forEach((gamer, index) => {
+                    if(gamer.speed === -1){
+                        game.players[index].speed = calculateWPM(endTime, startTime, player);
+                    }
+                });
+                game = await game.save() ;
+                io.to(gameID).emit('updateGame', game);
+                clearInterval(timerID) ;
+            })()
         }
         return gameIntervalFunc ;
     }(), 1000);
@@ -101,5 +117,14 @@ startGameClock = (gameID) => {
 
 const calculateTime = (time) => {
     let minutes = Math.floor(time / 60) ;
+    let seconds = time % 60 ;
+    return `${minutes}: ${seconds < 10 ? "0" + seconds : seconds }`;
 } 
 
+const calculateWPM = (endTime, startTime, player) => {
+    let numOfWords = player.currentWordIndex ;
+    const timeInSeconds = (endTime - startTime) / 1000 ;
+    const timeInMinutes = timeInSeconds / 60 ;
+    const WPM = Math.floor(numOfWords / timeInMinutes) ;
+    return WPM ;
+}
