@@ -46,6 +46,7 @@ function App(){
           <Route path="/Multiplayer" element={<Multiplayer/>}/>
           <Route path="/CreateGame" element={<CreateGame/>}/>
           <Route path="/JoinGame" element={<JoinGame/>}/>
+          {/* check */}
         </Routes>
       </div>
 )};

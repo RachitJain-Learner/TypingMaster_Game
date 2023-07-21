@@ -33,10 +33,9 @@ const GameSchema = new mongoose.Schema({
     isComplete : {
         type : Boolean,
         default : false
-    },
+    }, 
     gamers : [PlayerSchema],    //players
     startTime : {type : Number}
 }) ;
 
-module.exports = mongoose.model("Player", PlayerSchema);
-module.exports = mongoose.model("Game", GameSchema); 
+module.exports = mongoose.model('Game', GameSchema); 

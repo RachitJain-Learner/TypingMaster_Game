@@ -11,7 +11,7 @@ const findGamer = (gamers) => {
 }
 
 const TypeMaster = ({gameState}) => {
-    const {_id, pl} = gameState ;
+    const {_id, gamers} = gameState ;
     const gamer = findGamer(gamers) ;
     if(_id === "")
         return <Redirect to="/" />

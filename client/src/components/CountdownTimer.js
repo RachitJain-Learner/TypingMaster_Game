@@ -12,7 +12,7 @@ const CountdownTimer = (props) => {
         })
     }, []);
 
-    const {countDown, message} = timer ;
+    const {countDownTimer, message} = timer ;
   return (
     <div>
         <h1>{CountdownTimer}</h1>

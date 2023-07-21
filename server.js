@@ -19,7 +19,7 @@ const io = socketio(server, {
     }
 }) ;
 
-const Game = require('./models/Player');
+const Game = require('./models/Game');
 const textAPI = require('./utility/api');
 // const { default: CountdownTimer } = require('./client/src/components/CountdownTimer');
 
@@ -52,7 +52,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/userDatabase' , { //imp
 io.on('connect', (socket)=>{
     socket.on('join-game', async(userName)=>{
         try{
-            let game = await Game.findById(_id);
+            let game = await  Game.findById(_id);
             if(game.isStart){
                 const gameID = game._id.toString();
                 socket.join(gameID);
