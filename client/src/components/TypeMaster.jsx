@@ -1,24 +1,26 @@
 import React from 'react' ;
-import {Redirect} from 'react-router-dom' ;
+import {useNavigate} from 'react-router-dom' ;
 import StartButton from './StartButton' ;
-import Timer from './Timer' ; //CountDown
+import CountdownTimer from './CountdownTimer' ; //CountDown
 import socket from '../socket' ;
 
-const findGamer = (gamers) => { 
-    return gamers.find(gamer => (
-        gamer.socketID === socket.id 
-    ));
+const findGamer = players => { 
+    return players.find(player => 
+        player.socketID === socket.id 
+    );
 }
 
 const TypeMaster = ({gameState}) => {
-    const {_id, gamers} = gameState ;
-    const gamer = findGamer(gamers) ;
+    const navigate = useNavigate();
+      
+    const {_id, players} = gameState ;
+    const player = findGamer(players) ;
     if(_id === "")
-        return <Redirect to="/" />
+        navigate('/')  ; //
     return (
         <div className='text-center'>
-            <Timer/>
-            <StartButton gamer={gamer} gameId={_id}/>
+            <CountdownTimer/>
+            <StartButton player={player} gameId={_id}/>
         </div>
     )
 }

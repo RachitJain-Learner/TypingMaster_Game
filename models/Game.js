@@ -3,12 +3,10 @@ const mongoose = require('mongoose');
 const PlayerSchema = new mongoose.Schema({
     currentWordIndex:{
         type: Number,
-        required:true,
         default : 0
     },
     socketID:{
         type:String,
-        required:true,
     },
     isStartingPlayer : {
         type: Boolean,
@@ -20,7 +18,6 @@ const PlayerSchema = new mongoose.Schema({
     },
     userName:{
         type: String,
-        required: true,
     }
 });
 
@@ -34,7 +31,7 @@ const GameSchema = new mongoose.Schema({
         type : Boolean,
         default : false
     }, 
-    gamers : [PlayerSchema],    //players
+    players : [PlayerSchema],    //players
     startTime : {type : Number}
 }) ;
 

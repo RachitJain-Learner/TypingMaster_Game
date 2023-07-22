@@ -2,7 +2,7 @@ import React from 'react'
 import socket from '../socket'
 import {useState} from 'react'
 
-const JoinGame = () => {
+const JoinGame = (props) => {
   const [userInput,setUserInput] = useState({gameID:"", userName:""});
 
   function changeHandler(event){

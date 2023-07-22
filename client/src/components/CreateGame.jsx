@@ -1,9 +1,9 @@
 import React from 'react'
 import socket from '../socket'
-import {useState} from 'react'
+import {useState} from 'react' ;
 
-const CreateGame = () => {
-  const [userName,setUserName] = useState("");
+const CreateGame = (props) => {
+  const [userName, setUserName] = useState("");
 
   function changeHandler(event){
     setUserName(event.target.value);

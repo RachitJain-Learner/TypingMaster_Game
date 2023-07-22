@@ -3,20 +3,22 @@ import Multiplayer from "./pages/Multiplayer";
 import Navbar from "./components/Navbar";
 import Solo from "./pages/Solo";
 import Home from './pages/Home'
-import { Routes, Route,useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import socket from './socket' ;
 import CreateGame from '../src/components/CreateGame';
 import JoinGame from '../src/components/JoinGame';
+import TypeMaster from '../src/components/TypeMaster' ;
 
 function App(){
   
-  const [gameState,setGameState] = useState({_id:"", isStart: false, gamers: [], words: [] });
+  const [gameState, setGameState] = useState({_id:"", isStart: false, players: [], words: [] });
   const navigate = useNavigate();
   
   useEffect(() =>{
     // socket.on('test', (message) =>{
     //   console.log(message);
-    socket.on('updateGame', (game) =>{
+    
+      socket.on('updateGame', (game) =>{
       console.log(game);
       setGameState(game);
     });
@@ -31,7 +33,7 @@ function App(){
 
   useEffect(()=>{
     if(gameState._id !== ""){
-      navigate(`/game/${gameState._id}`);   //error 
+      navigate(`/Game/${gameState._id}`);   //error 
     }
   },[gameState._id]);
 
@@ -46,6 +48,7 @@ function App(){
           <Route path="/Multiplayer" element={<Multiplayer/>}/>
           <Route path="/CreateGame" element={<CreateGame/>}/>
           <Route path="/JoinGame" element={<JoinGame/>}/>
+          <Route path="/Game/:gameID" element={<TypeMaster gameState={gameState}/>}/>
           {/* check */}
         </Routes>
       </div>
